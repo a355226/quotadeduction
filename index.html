@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png">
   <meta charset="UTF-8">
   <title>CMS額度扣除計算器</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,11 +47,18 @@
   text-align: center;
 }
 
+.warning {
+  color: #FF5151;
+  font-weight: bold;
+}
   </style>
 </head>
 <body>
 
-<h2>CMS 額度扣除計算器</h2>
+<h2>
+  <img src="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png" alt="icon" style="height: 1.8em; vertical-align: middle; margin-right: 0.3em;">
+  CMS 額度扣除計算器
+</h2>
 
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
@@ -157,10 +165,11 @@ function updateResults() {
   const hasForeign = document.getElementById("hasForeign").checked;
   const resultBox = document.getElementById("resultBox");
 
-  if (!dateStr || !cmsLevel) {
-    resultBox.innerHTML = "請先選擇 CMS 等級與日期";
-    return;
-  }
+if (!dateStr || !cmsLevel) {
+  resultBox.innerHTML = `<span class="warning">請先選擇日期與CMS等級</span>`;
+  return;
+}
+
 
   const monthDays = getMonthDays(dateStr);
   const passedDays = getDayOfMonth(dateStr) - 1;
@@ -178,11 +187,11 @@ function updateResults() {
       <div class="row"><span>🚐 扣除交通接送額度：</span><b>${transportReduced.toLocaleString('en-US')} 元</b></div>
   `;
 }
+window.onload = () => {
+  updateResults();
+};
 
 </script>
 
 </body>
 </html>
-
-
-
