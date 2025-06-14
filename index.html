@@ -3,7 +3,7 @@
 <head>
   <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png">
   <meta charset="UTF-8">
-  <title>CMS額度扣除計算器</title>
+  <title>首月額度扣除計算器</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     body { font-family: 'Segoe UI', sans-serif; padding: 2em; background: #f4f8fb; }
@@ -79,12 +79,12 @@
 
 <h2>
   <img src="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png" alt="icon" style="height: 1.8em; vertical-align: middle; margin-right: 0.3em;">
-  CMS 額度扣除計算器
+  首月額度扣除計算器
 </h2>
 
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
-  <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" />
+  <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" onkeydown="return false;" />
   <button onclick="changeDate(1)">＋</button>
 </div>
 
@@ -217,6 +217,3 @@ window.onload = () => {
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
 </html>
-
-
-
