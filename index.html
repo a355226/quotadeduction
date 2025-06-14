@@ -97,6 +97,8 @@ input[type="date"] {
   border-radius: 6px;
   border: 1px solid #ccc;
   text-align: center;  /* ✅ 日期文字置中 */
+-webkit-appearance: none; /* ✅ 解決 Android Chrome 不置中問題 */
+  appearance: none;
 }
 
 .date-controls {
@@ -277,6 +279,3 @@ dateInput.addEventListener('click', () => {
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
 </html>
-
-
-
