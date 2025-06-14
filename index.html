@@ -82,7 +82,7 @@
   }
 
 select {
-  font-size: 1.1em;
+  font-size: 1.2em;
   padding: 0.1em 0.9em;
   min-width: 100px; /* 放大 CMS 選單寬度 */
   border-radius: 6px;
@@ -91,12 +91,35 @@ text-align: center;
 }
 
 input[type="date"] {
-  font-size: 1.5em;
+  font-size: 1.2em;
   padding: 0.4em 0.6em;
   width: 180px;
   border-radius: 6px;
   border: 1px solid #ccc;
   text-align: center;  /* ✅ 日期文字置中 */
+}
+
+.date-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em; /* 按鈕與欄位間距 */
+  flex-wrap: nowrap;    /* ✅ 禁止換行 */
+}
+
+.date-controls input[type="date"] {
+  flex-shrink: 0;
+  width: 180px;         /* 固定寬度，防止自動收窄 */
+  font-size: 1.2em;
+  text-align: center;
+  padding: 0.4em 0.6em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+select {
+  text-align: center;
+  text-align-last: center; /* ✅ 對IOS select 有效的置中方式 */
 }
 
   </style>
@@ -254,3 +277,6 @@ dateInput.addEventListener('click', () => {
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
 </html>
+
+
+
