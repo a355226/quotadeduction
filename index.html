@@ -124,6 +124,16 @@ select {
   text-align-last: center; /* ✅ 對IOS select 有效的置中方式 */
 }
 
+input[type="date"]::-webkit-datetime-edit {
+  text-align: center;
+}
+
+input[type="date"]::-webkit-inner-spin-button,  /* ✅ 對android select 有效的置中方式 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  margin-left: auto;
+  margin-right: auto;
+}
+    
   </style>
 </head>
 <body>
