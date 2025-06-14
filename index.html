@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>CMS額度扣除計算器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; padding: 2em; background: #f4f8fb; }
+    h2 { text-align: center; color: #333; }
+    .date-controls, .options, .result { margin: 1em 0; text-align: center; }
+    button { padding: 0.5em 1em; margin: 0 0.5em; border: none; background: #007bff; color: white; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    input[type="checkbox"] { transform: scale(1.5); margin-left: 10px; vertical-align: middle; }
+    .output-box {
+  background: white;
+  padding: 1em;
+  border-radius: 6px;
+  margin: 1em auto;
+  max-width: 325px;  /* ✅ 限制最大寬度 */
+  box-shadow: 0 0 5px #ccc;
+}
+
+    .copied { color: green; margin-top: 0.5em; font-weight: bold; }
+.result-table .row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5em 0;
+  font-size: 1.1em;
+}
+.result-table span {
+  flex: none;
+  text-align: left;
+}
+.result-table b {
+  flex: none;
+  text-align: right;
+  min-width: 80px;
+}
+
+.options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5em;  /* ← 這行控制間距 */
+  margin: 1em 0;
+  text-align: center;
+}
+
+  </style>
+</head>
+<body>
+
+<h2>CMS 額度扣除計算器</h2>
+
+<div class="date-controls">
+  <button onclick="changeDate(-1)">－</button>
+  <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" />
+  <button onclick="changeDate(1)">＋</button>
+</div>
+
+<div class="options">
+  <label>選擇 CMS 等級：
+    <select id="cmsSelect" onchange="updateResults()">
+      <option value="">請選擇</option>
+      <option value="2">2級</option>
+      <option value="3">3級</option>
+      <option value="4">4級</option>
+      <option value="5">5級</option>
+      <option value="6">6級</option>
+      <option value="7">7級</option>
+      <option value="8">8級</option>
+    </select>
+  </label>
+  <label>
+    有外籍看護
+    <input type="checkbox" id="hasForeign" onchange="updateResults()">
+  </label>
+</div>
+
+<div class="result">
+  <div class="output-box" id="resultBox">請先選擇 CMS 等級與日期</div>
+</div>
+
+<div class="options">
+  <button onclick="copyText()">一鍵複製罐頭語</button>
+  <div id="copyConfirm" class="copied" style="display:none;">複製成功！</div>
+</div>
+
+<script>
+const cmsData = {
+  2: { no_foreign: 10020, with_foreign: 3006 },
+  3: { no_foreign: 15460, with_foreign: 4638 },
+  4: { no_foreign: 18580, with_foreign: 5574 },
+  5: { no_foreign: 24100, with_foreign: 7230 },
+  6: { no_foreign: 28070, with_foreign: 8421 },
+  7: { no_foreign: 32090, with_foreign: 9627 },
+  8: { no_foreign: 36180, with_foreign: 10854 }
+};
+
+function getMonthDays(date) {
+  const d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+}
+
+function getDayOfMonth(date) {
+  return new Date(date).getDate();
+}
+
+function updateResults() {
+  const dateStr = document.getElementById("selectDate").value;
+  const cmsLevel = document.getElementById("cmsSelect").value;
+  const hasForeign = document.getElementById("hasForeign").checked;
+  const resultBox = document.getElementById("resultBox");
+
+  if (!dateStr || !cmsLevel) {
+    resultBox.innerHTML = "請先選擇 CMS 等級與日期";
+    return;
+  }
+
+  const monthDays = getMonthDays(dateStr);
+  const passedDays = getDayOfMonth(dateStr) - 1;
+  const ratio = passedDays / monthDays;
+
+  const base = cmsData[cmsLevel][hasForeign ? "with_foreign" : "no_foreign"];
+  const careReduced = Math.round(base * ratio);
+  const transportBase = 1680;
+  const transportReduced = Math.round(transportBase * ratio);
+
+  resultBox.innerHTML = `
+    <b>CMS ${cmsLevel} 級${hasForeign ? "（有外看）" : ""}</b><br>
+    🔹 扣除照顧及專業服務額度：<b>${careReduced} 元</b><br>
+    🚐 扣除交通接送額度：<b>${transportReduced} 元</b>
+  `;
+}
+
+function changeDate(offset) {
+  const dateInput = document.getElementById("selectDate");
+  const d = new Date(dateInput.value);
+  d.setDate(d.getDate() + offset);
+  dateInput.valueAsDate = d;
+  updateResults();
+}
+
+function copyText() {
+  const text = `依據長期照顧服務申請及給付辦法第三章第12條，未滿1個月者按比例計算照顧及交通接送額度。`;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById("copyConfirm").style.display = "block";
+    setTimeout(() => {
+      document.getElementById("copyConfirm").style.display = "none";
+    }, 1500);
+  });
+}
+
+function updateResults() {
+  const dateStr = document.getElementById("selectDate").value;
+  const cmsLevel = document.getElementById("cmsSelect").value;
+  const hasForeign = document.getElementById("hasForeign").checked;
+  const resultBox = document.getElementById("resultBox");
+
+  if (!dateStr || !cmsLevel) {
+    resultBox.innerHTML = "請先選擇 CMS 等級與日期";
+    return;
+  }
+
+  const monthDays = getMonthDays(dateStr);
+  const passedDays = getDayOfMonth(dateStr) - 1;
+  const ratio = passedDays / monthDays;
+
+  const base = cmsData[cmsLevel][hasForeign ? "with_foreign" : "no_foreign"];
+  const careReduced = Math.round(base * ratio);
+  const transportBase = 1680;
+  const transportReduced = Math.round(transportBase * ratio);
+
+  resultBox.innerHTML = `
+    <b>CMS ${cmsLevel} 級${hasForeign ? "（有外看）" : ""}</b>
+    <div class="result-table">
+      <div class="row"><span>🧓 扣除照顧專業額度：</span><b>${careReduced.toLocaleString('en-US')} 元</b></div>
+      <div class="row"><span>🚐 扣除交通接送額度：</span><b>${transportReduced.toLocaleString('en-US')} 元</b></div>
+  `;
+}
+
+</script>
+
+</body>
+</html>
+
+
+
