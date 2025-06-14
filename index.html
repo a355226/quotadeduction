@@ -133,6 +133,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* ✅ 強化 Android 日期欄位文字置中 */
+input[type="date"]::-webkit-datetime-edit {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+/* ✅ 解決日期欄位左右內距/圖示歪斜問題 */
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+  margin: 0 auto;
+  display: block;
+  position: relative;
+}
     
   </style>
 </head>
