@@ -346,21 +346,6 @@ function openMiniWindow() {
     alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
   }
 }
-function createShrinkButton() {
-  if (window.innerWidth >= 900) {
-    const btn = document.createElement("button");
-    btn.className = "shrink-btn";
-    btn.textContent = "🔳 縮小模式";
-    btn.onclick = openMiniWindow;
-    document.body.appendChild(btn);
-  }
-}
-
-window.onload = () => {
-  updateResults();
-  createShrinkButton();  // ⬅ 加這行動態插入按鈕
-};
-
   
 </script>
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
