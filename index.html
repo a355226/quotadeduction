@@ -149,6 +149,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
 }
     
+.shrink-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  padding: 0.3em 0.7em;
+  font-size: 0.9em;
+  background-color: #ccc;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 999;
+  display: none;
+}
+@media screen and (min-width: 1024px) {
+  .shrink-btn {
+    display: block;
+  }
+}
   </style>
 </head>
 <body>
@@ -157,6 +175,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   <img src="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png" alt="icon" style="height: 1.8em; vertical-align: middle; margin-right: 0.3em;">
   首月額度計算器
 </h2>
+
+<button class="shrink-btn" onclick="openMiniWindow()">📟 小視窗模式</button>
 
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
@@ -310,7 +330,21 @@ const version = '20240614';
 document.querySelectorAll('link[rel="stylesheet"], script[src], link[rel*="icon"], link[rel="manifest"]').forEach(el => {
   const attr = el.href !== undefined ? 'href' : 'src';
   el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + version;
-});  
+});
+
+function openMiniWindow() {
+  const miniWindow = window.open(
+    window.location.href,
+    'miniQuotaCalc',
+    'width=400,height=600,scrollbars=no,resizable=no'
+  );
+  if (miniWindow) {
+    miniWindow.focus();
+  } else {
+    alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
+  }
+}
+  
 </script>
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
