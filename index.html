@@ -150,6 +150,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
     
 .shrink-btn {
+  display: none;
   position: absolute;
   top: 15px;
   right: 20px;
@@ -160,13 +161,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
   cursor: pointer;
   z-index: 999;
-  display: none;
 }
-@media screen and (min-width: 1024px) {
+
+@media screen and (min-width: 900px) {
   .shrink-btn {
     display: block;
   }
 }
+
   </style>
 </head>
 <body>
