@@ -281,18 +281,17 @@ if (!dateStr || !cmsLevel) {
 }
 window.onload = () => {
   updateResults();
+
+  const dateInput = document.getElementById('selectDate');
+  dateInput.addEventListener('click', () => {
+    if (dateInput.showPicker) {
+      dateInput.showPicker();
+    } else {
+      dateInput.focus();
+    }
+  });
 };
 
-const dateInput = document.getElementById('selectDate');
-
-// 1. 點欄框：保險起見手動叫出日曆
-dateInput.addEventListener('click', () => {
-  if (dateInput.showPicker) {          // Chromium 家族
-    dateInput.showPicker();
-  } else {                             // 其他瀏覽器
-    dateInput.focus();                 // 至少把游標帶進去
-  }
-});
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')
