@@ -154,6 +154,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
     
 .shrink-trigger {
+  display: none;
   position: fixed;
   top: 12px;
   right: 12px;
@@ -165,11 +166,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 6px;
   cursor: pointer;
   z-index: 9999;
-
 }
 @media screen and (min-width: 900px) {
-  /* 可以放需要在桌機上才生效的樣式 */
+  .shrink-trigger {
+    display: block;
+  }
 }
+
   </style>
 </head>
 <body>
@@ -178,7 +181,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   <img src="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png" alt="icon" style="height: 1.8em; vertical-align: middle; margin-right: 0.3em;">
   首月額度計算器
 </h2>
-
+<button class="shrink-trigger" onclick="openMiniWindow()">📟 小視窗模式</button>
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
   <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" onkeydown="return false;" />
