@@ -323,19 +323,7 @@ function openMiniWindow() {
   }
 }
 
-function createShrinkButton() {
-  if (window.innerWidth >= 900) {
-    const btn = document.createElement("button");
-    btn.className = "shrink-trigger";
-    btn.textContent = "📟 小視窗模式";
-    btn.onclick = openMiniWindow;
-    document.body.appendChild(btn);
-  }
-}
-window.addEventListener("load", createShrinkButton);
 
-
- 
 </script>
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
