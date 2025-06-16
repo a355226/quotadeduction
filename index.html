@@ -149,26 +149,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
 }
     
-.shrink-btn {
+.shrink-trigger {  /* ✅ 避開 "btn"、"shrink" 關鍵字 */
   display: none;
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  padding: 0.3em 0.7em;
+  position: fixed;     /* ✅ 改為 fixed 也比較穩定 */
+  top: 12px;
+  right: 12px;
+  padding: 0.4em 0.9em;
   font-size: 0.9em;
   background-color: #007bff;
-  color: white; /* ✅ 加這行 */
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  z-index: 999;
+  z-index: 9999;
 }
-
 @media screen and (min-width: 900px) {
-  .shrink-btn {
+  .shrink-trigger {
     display: block;
   }
 }
+
 
 
   </style>
@@ -180,7 +180,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   首月額度計算器
 </h2>
 
-<button class="shrink-btn" onclick="openMiniWindow()">📟 小視窗模式</button>
+<button class="shrink-trigger" onclick="openMiniWindow()">📟 小視窗模式</button>
 
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
