@@ -6,31 +6,16 @@ const URLS_TO_CACHE = [
   '/manifest.json'
 ];
 
-// 安裝時快取資源
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(URLS_TO_CACHE))
-  );
+self.addEventListener('install', event => {
+  self.skipWaiting(); // 安裝後立即啟用
 });
 
-// 啟用時清除舊快取
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) =>
-      Promise.all(cacheNames.map((name) => {
-        if (name !== CACHE_NAME) {
-          return caches.delete(name);
-        }
-      }))
-    )
-  );
+self.addEventListener('activate', event => {
+  clients.claim(); // 啟用後立刻接管所有頁面
 });
 
-// 攔截請求
-self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request).then((response) =>
-      response || fetch(event.request)
-    )
-  );
+self.addEventListener('fetch', event => {
+  // 不做任何快取，直接用 fetch 確保都是最新資料
+  event.respondWith(fetch(event.request));
 });
+
