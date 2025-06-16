@@ -156,13 +156,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 12px;
   padding: 0.4em 0.9em;
   font-size: 0.9em;
-  background-color: #666;  /* ✅ 改成灰底 */
-  color: white;            /* ✅ 白字 */
+  background-color: #666 !important;  /* ✅ 強制灰底 */
+  color: white !important;            /* ✅ 強制白字 */
   border: none;
   border-radius: 6px;
   cursor: pointer;
   z-index: 9999;
 }
+
 
 @media screen and (min-width: 900px) {
   .shrink-trigger {
