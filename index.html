@@ -346,9 +346,16 @@ function openMiniWindow() {
 }
 
 function createShrinkButton() {
-  const alreadyHasBtn = document.querySelector('.shrink-trigger');
-  if (alreadyHasBtn) {
-    if (DEBUG) console.warn("⚠️ 發現已有 shrink-trigger，跳過建立");
+  console.log("🛠️ 正在執行 createShrinkButton");
+
+  if (!document.body) {
+    console.error("❌ document.body 尚未建立，延後執行！");
+    setTimeout(createShrinkButton, 100); // 再等一下重試
+    return;
+  }
+
+  if (document.querySelector('.shrink-trigger')) {
+    console.warn("⚠️ 已有 shrink-trigger，不重複建立");
     return;
   }
 
@@ -357,48 +364,34 @@ function createShrinkButton() {
     btn.textContent = "📟 小視窗模式";
     btn.className = "shrink-trigger";
     btn.onclick = openMiniWindow;
-
     document.body.appendChild(btn);
+    console.log("✅ 按鈕成功加入 DOM");
 
-    if (DEBUG) {
-      console.log("✅ 小視窗按鈕已插入 DOM");
-      showDebugMessage("✅ 小視窗按鈕已插入");
-    }
+    // 畫面顯示
+    const debug = document.createElement("div");
+    debug.textContent = "✅ 小視窗按鈕已插入";
+    debug.style.position = "fixed";
+    debug.style.bottom = "50px";
+    debug.style.right = "15px";
+    debug.style.background = "#333";
+    debug.style.color = "#fff";
+    debug.style.padding = "6px 10px";
+    debug.style.borderRadius = "6px";
+    debug.style.zIndex = "9999";
+    document.body.appendChild(debug);
+    setTimeout(() => debug.remove(), 4000);
   } else {
-    if (DEBUG) {
-      console.warn("⛔ 畫面寬度小於 900px，未插入按鈕");
-      showDebugMessage("⛔ 螢幕寬度太窄（" + window.innerWidth + "px）未插入按鈕");
-    }
+    console.warn(`⛔ 畫面太小 (${window.innerWidth}px)，不顯示按鈕`);
   }
 }
 
-function showDebugMessage(msg) {
-  let div = document.getElementById("debug-log");
-  if (!div) {
-    div = document.createElement("div");
-    div.id = "debug-log";
-    div.style.position = "fixed";
-    div.style.bottom = "40px";
-    div.style.right = "15px";
-    div.style.background = "rgba(0,0,0,0.7)";
-    div.style.color = "#fff";
-    div.style.padding = "0.5em 1em";
-    div.style.fontSize = "0.9em";
-    div.style.borderRadius = "6px";
-    div.style.zIndex = "99999";
-    document.body.appendChild(div);
-  }
-  div.textContent = msg;
-  clearTimeout(div._timeout);
-  div._timeout = setTimeout(() => div.remove(), 5000);
-}
-
-window.addEventListener("load", createShrinkButton);
 
 
  
 </script>
+  
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
+window.addEventListener("load", createShrinkButton);
 </body>
 </html>
 
