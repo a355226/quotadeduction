@@ -16,161 +16,111 @@
     body { font-family: 'Segoe UI', sans-serif; padding: 2em; background: #f4f8fb; }
     h2 { text-align: center; color: #333; }
     .date-controls, .options, .result { margin: 1em 0; text-align: center; }
-    button { padding: 0.5em 1em; margin: 0 0.5em; border: none; background: #007bff; color: white; border-radius: 4px; cursor: pointer; }
+    button { padding: 0.5em 1em; margin: 0 0.5em; border: none; background: #007bff; color: white; border-radius: 4px; cursor: pointer; touch-action: manipulation; }
     button:hover { background: #0056b3; }
     input[type="checkbox"] { transform: scale(1.5); margin-left: 10px; vertical-align: middle; }
     .output-box {
-  background: white;
-  padding: 1em;
-  border-radius: 6px;
-  margin: 1em auto;
-  max-width: 325px;  /* ✅ 限制最大寬度 */
-  box-shadow: 0 0 5px #ccc;
-}
+      background: white;
+      padding: 1em;
+      border-radius: 6px;
+      margin: 1em auto;
+      max-width: 325px;
+      box-shadow: 0 0 5px #ccc;
+    }
 
     .copied { color: green; margin-top: 0.5em; font-weight: bold; }
-.result-table .row {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.5em 0;
-  font-size: 1.1em;
-}
-.result-table span {
-  flex: none;
-  text-align: left;
-}
-.result-table b {
-  flex: none;
-  text-align: right;
-  min-width: 80px;
-}
+    .result-table .row {
+      display: flex;
+      justify-content: space-between;
+      margin: 0.5em 0;
+      font-size: 1.1em;
+    }
+    .result-table span {
+      flex: none;
+      text-align: left;
+    }
+    .result-table b {
+      flex: none;
+      text-align: right;
+      min-width: 80px;
+    }
 
-.options {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.5em;  /* ← 這行控制間距 */
-  margin: 1em 0;
-  text-align: center;
-}
+    .options {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1.5em;
+      margin: 1em 0;
+      text-align: center;
+    }
 
-.warning {
-  color: #FF5151;
-  font-weight: bold;
-}
+    .warning {
+      color: #FF5151;
+      font-weight: bold;
+    }
 
-.footer-note {
-  position: fixed;
-  bottom: 10px;
-  right: 15px;
-  font-size: 0.9em;
-  color: #aaa;
-  font-style: italic;
-  pointer-events: none;
-  user-select: none;
-}
+    .footer-note {
+      position: fixed;
+      bottom: 10px;
+      right: 15px;
+      font-size: 0.9em;
+      color: #aaa;
+      font-style: italic;
+      pointer-events: none;
+      user-select: none;
+    }
 
-  button {
-    padding: 0.5em 1em;
-    margin: 0 0.5em;
-    border: none;
-    background: #007bff;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    touch-action: manipulation;  /* ✅ 新增這一行 */
-  }
+    select {
+      font-size: 1.2em;
+      padding: 0.1em 0.9em;
+      min-width: 100px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+      text-align-last: center;
+    }
 
-select {
-  font-size: 1.2em;
-  padding: 0.1em 0.9em;
-  min-width: 100px; /* 放大 CMS 選單寬度 */
-  border-radius: 6px;
-  border: 1px solid #ccc;
-text-align: center;
-}
+    input[type="date"] {
+      font-size: 1.2em;
+      padding: 0.4em 0.6em;
+      width: 180px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+      -webkit-appearance: none;
+      appearance: none;
+    }
 
-input[type="date"] {
-  font-size: 1.2em;
-  padding: 0.4em 0.6em;
-  width: 180px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  text-align: center;  /* ✅ 日期文字置中 */
--webkit-appearance: none; /* ✅ 解決 Android Chrome 不置中問題 */
-  appearance: none;
-}
+    .date-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+      flex-wrap: nowrap;
+    }
 
-.date-controls {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5em; /* 按鈕與欄位間距 */
-  flex-wrap: nowrap;    /* ✅ 禁止換行 */
-}
+    .date-controls input[type="date"] {
+      flex-shrink: 0;
+      width: 180px;
+      font-size: 1.2em;
+      text-align: center;
+      padding: 0.4em 0.6em;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
 
-.date-controls input[type="date"] {
-  flex-shrink: 0;
-  width: 180px;         /* 固定寬度，防止自動收窄 */
-  font-size: 1.2em;
-  text-align: center;
-  padding: 0.4em 0.6em;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
+    input[type="date"]::-webkit-datetime-edit {
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+    }
 
-select {
-  text-align: center;
-  text-align-last: center; /* ✅ 對IOS select 有效的置中方式 */
-}
-
-input[type="date"]::-webkit-datetime-edit {
-  text-align: center;
-}
-
-input[type="date"]::-webkit-inner-spin-button,  /* ✅ 對android select 有效的置中方式 */
-input[type="date"]::-webkit-calendar-picker-indicator {
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ✅ 強化 Android 日期欄位文字置中 */
-input[type="date"]::-webkit-datetime-edit {
-  text-align: center;
-  display: inline-block;
-  width: 100%;
-}
-
-/* ✅ 解決日期欄位左右內距/圖示歪斜問題 */
-input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-  margin: 0 auto;
-  display: block;
-  position: relative;
-}
-    
-.shrink-trigger {  /* ✅ 避開 "btn"、"shrink" 關鍵字 */
-  display: none;
-  position: fixed;     /* ✅ 改為 fixed 也比較穩定 */
-  top: 12px;
-  right: 12px;
-  padding: 0.4em 0.9em;
-  font-size: 0.9em;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  z-index: 9999;
-}
-@media screen and (min-width: 900px) {
-  .shrink-trigger {
-    display: block;
-  }
-}
-
-
-
+    input[type="date"]::-webkit-inner-spin-button,
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      margin: 0 auto;
+      display: block;
+      position: relative;
+    }
   </style>
 </head>
 <body>
@@ -258,11 +208,10 @@ function updateResults() {
   const hasForeign = document.getElementById("hasForeign").checked;
   const resultBox = document.getElementById("resultBox");
 
-if (!dateStr || !cmsLevel) {
-  resultBox.innerHTML = `<span class="warning">請先選擇日期與CMS等級</span>`;
-  return;
-}
-
+  if (!dateStr || !cmsLevel) {
+    resultBox.innerHTML = `<span class="warning">請先選擇日期與CMS等級</span>`;
+    return;
+  }
 
   const monthDays = getMonthDays(dateStr);
   const passedDays = getDayOfMonth(dateStr) - 1;
@@ -278,121 +227,38 @@ if (!dateStr || !cmsLevel) {
     <div class="result-table">
       <div class="row"><span>🧓 扣除照顧專業額度：</span><b>${careReduced.toLocaleString('en-US')} 元</b></div>
       <div class="row"><span>🚐 扣除交通接送額度：</span><b>${transportReduced.toLocaleString('en-US')} 元</b></div>
+    </div>
   `;
 }
+
 window.onload = () => {
   updateResults();
 };
 
 const dateInput = document.getElementById('selectDate');
-
-// 1. 點欄框：保險起見手動叫出日曆
 dateInput.addEventListener('click', () => {
-  if (dateInput.showPicker) {          // Chromium 家族
+  if (dateInput.showPicker) {
     dateInput.showPicker();
-  } else {                             // 其他瀏覽器
-    dateInput.focus();                 // 至少把游標帶進去
+  } else {
+    dateInput.focus();
   }
 });
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => console.log('ServiceWorker 註冊成功:', reg.scope))
-        .catch(err => console.log('ServiceWorker 註冊失敗:', err));
-    });
-  }
-const version = '20240616';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => console.log('ServiceWorker 註冊成功:', reg.scope))
+      .catch(err => console.log('ServiceWorker 註冊失敗:', err));
+  });
+}
+
+const version = '20240616';
 document.querySelectorAll('link[rel="icon"], link[rel="manifest"]').forEach(el => {
   const attr = 'href';
   el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + version;
 });
-
-
-function openMiniWindow() {
-  const miniWindow = window.open(
-    window.location.href,
-    'miniQuotaCalc',
-    'width=400,height=600,scrollbars=no,resizable=no'
-  );
-  if (miniWindow) {
-    miniWindow.focus();
-  } else {
-    alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
-  }
-}
-
- window.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('.shrink-trigger');
-  if (btn && window.innerWidth >= 900) {
-    btn.style.display = 'block';
-  }
-});
-
-// 🟡 除錯模式開關（可關閉）
-const DEBUG = true;
-
-function openMiniWindow() {
-  const miniWindow = window.open(
-    window.location.href,
-    'miniQuotaCalc',
-    'width=400,height=600,scrollbars=no,resizable=no'
-  );
-  if (miniWindow) {
-    miniWindow.focus();
-  } else {
-    alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
-  }
-}
-
-function createShrinkButton() {
-  console.log("🛠️ 正在執行 createShrinkButton");
-
-  if (!document.body) {
-    console.error("❌ document.body 尚未建立，延後執行！");
-    setTimeout(createShrinkButton, 100); // 再等一下重試
-    return;
-  }
-
-  if (document.querySelector('.shrink-trigger')) {
-    console.warn("⚠️ 已有 shrink-trigger，不重複建立");
-    return;
-  }
-
-  if (window.innerWidth >= 900) {
-    const btn = document.createElement("button");
-    btn.textContent = "📟 小視窗模式";
-    btn.className = "shrink-trigger";
-    btn.onclick = openMiniWindow;
-    document.body.appendChild(btn);
-    console.log("✅ 按鈕成功加入 DOM");
-
-    // 畫面顯示
-    const debug = document.createElement("div");
-    debug.textContent = "✅ 小視窗按鈕已插入";
-    debug.style.position = "fixed";
-    debug.style.bottom = "50px";
-    debug.style.right = "15px";
-    debug.style.background = "#333";
-    debug.style.color = "#fff";
-    debug.style.padding = "6px 10px";
-    debug.style.borderRadius = "6px";
-    debug.style.zIndex = "9999";
-    document.body.appendChild(debug);
-    setTimeout(() => debug.remove(), 4000);
-  } else {
-    console.warn(`⛔ 畫面太小 (${window.innerWidth}px)，不顯示按鈕`);
-  }
-}
-
-
-
- 
 </script>
-  
+
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
-window.addEventListener("load", createShrinkButton);
 </body>
 </html>
-
-
