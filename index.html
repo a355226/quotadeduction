@@ -324,22 +324,6 @@ function openMiniWindow() {
   }
 }
 
- window.addEventListener('DOMContentLoaded', () => {
-  const btn = document.querySelector('.shrink-trigger');
-  if (btn && window.innerWidth >= 900) {
-    btn.style.display = 'block';
-  }
-});
-
-function createShrinkButton() {
-  const btn = document.querySelector('.shrink-trigger'); // ✅ 改這裡
-  if (btn && window.innerWidth >= 900) {
-    btn.style.display = 'block';
-    btn.onclick = openMiniWindow;
-  }
-}
-window.addEventListener("load", createShrinkButton);
-
  
 </script>
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
