@@ -149,28 +149,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
 }
     
-.shrink-trigger {
+.shrink-trigger {  /* ✅ 避開 "btn"、"shrink" 關鍵字 */
   display: none;
-  position: fixed;
+  position: fixed;     /* ✅ 改為 fixed 也比較穩定 */
   top: 12px;
   right: 12px;
   padding: 0.4em 0.9em;
   font-size: 0.9em;
-  background-color: #666 !important;  /* ✅ 強制灰底 */
-  color: white !important;            /* ✅ 強制白字 */
+  background-color: #007bff;
+  color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   z-index: 9999;
 }
-
-
 @media screen and (min-width: 900px) {
   .shrink-trigger {
     display: block;
   }
 }
-
 
 
 
@@ -326,6 +323,22 @@ function openMiniWindow() {
     alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
   }
 }
+
+ window.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.shrink-trigger');
+  if (btn && window.innerWidth >= 900) {
+    btn.style.display = 'block';
+  }
+});
+
+function createShrinkButton() {
+  const btn = document.querySelector('.shrink-trigger'); // ✅ 改這裡
+  if (btn && window.innerWidth >= 900) {
+    btn.style.display = 'block';
+    btn.onclick = openMiniWindow;
+  }
+}
+window.addEventListener("load", createShrinkButton);
 
  
 </script>
