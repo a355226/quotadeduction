@@ -180,8 +180,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   首月額度計算器
 </h2>
 
-<button class="shrink-trigger" onclick="openMiniWindow()">📟 小視窗模式</button>
-
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
   <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" onkeydown="return false;" />
@@ -332,13 +330,16 @@ function openMiniWindow() {
 });
 
 function createShrinkButton() {
-  const btn = document.querySelector('.shrink-trigger'); // ✅ 改這裡
-  if (btn && window.innerWidth >= 900) {
-    btn.style.display = 'block';
-    btn.onclick = openMiniWindow;
-  }
+  if (window.innerWidth >= 900) {
+    const btn = document.createElement("button");
+    btn.textContent = "📟 小視窗模式";
+    btn.className = "shrink-trigger";
+    btn.onclick = openMiniWindow;
+    document.body.appendChild(btn);
+  }
 }
 window.addEventListener("load", createShrinkButton);
+
 
  
 </script>
