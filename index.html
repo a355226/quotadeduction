@@ -14,11 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <style>
     body { font-family: 'Segoe UI', sans-serif; padding: 2em; background: #f4f8fb; }
-    h2 {
-  text-align: center;
-  color: #333;
-  margin-top: 2.5em; /* ✅ 幫小視窗按鈕騰出空間 */
-}
+    h2 { text-align: center; color: #333; }
     .date-controls, .options, .result { margin: 1em 0; text-align: center; }
     button { padding: 0.5em 1em; margin: 0 0.5em; border: none; background: #007bff; color: white; border-radius: 4px; cursor: pointer; }
     button:hover { background: #0056b3; }
@@ -153,9 +149,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   position: relative;
 }
     
-.shrink-trigger {
+.shrink-trigger {  /* ✅ 避開 "btn"、"shrink" 關鍵字 */
   display: none;
-  position: fixed;
+  position: fixed;     /* ✅ 改為 fixed 也比較穩定 */
   top: 12px;
   right: 12px;
   padding: 0.4em 0.9em;
@@ -167,6 +163,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   cursor: pointer;
   z-index: 9999;
 }
+@media screen and (min-width: 900px) {
+  .shrink-trigger {
+    display: block;
+  }
+}
+
+
 
   </style>
 </head>
@@ -176,7 +179,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   <img src="https://cdn.jsdelivr.net/gh/a355226/quotadeduction/icon.png" alt="icon" style="height: 1.8em; vertical-align: middle; margin-right: 0.3em;">
   首月額度計算器
 </h2>
+
 <button class="shrink-trigger" onclick="openMiniWindow()">📟 小視窗模式</button>
+
 <div class="date-controls">
   <button onclick="changeDate(-1)">－</button>
   <input type="date" id="selectDate" value="2025-06-14" onchange="updateResults()" onkeydown="return false;" />
@@ -279,17 +284,18 @@ if (!dateStr || !cmsLevel) {
 }
 window.onload = () => {
   updateResults();
-
-  const dateInput = document.getElementById('selectDate');
-  dateInput.addEventListener('click', () => {
-    if (dateInput.showPicker) {
-      dateInput.showPicker();
-    } else {
-      dateInput.focus();
-    }
-  });
 };
 
+const dateInput = document.getElementById('selectDate');
+
+// 1. 點欄框：保險起見手動叫出日曆
+dateInput.addEventListener('click', () => {
+  if (dateInput.showPicker) {          // Chromium 家族
+    dateInput.showPicker();
+  } else {                             // 其他瀏覽器
+    dateInput.focus();                 // 至少把游標帶進去
+  }
+});
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/service-worker.js')
@@ -299,6 +305,7 @@ window.onload = () => {
   }
 const version = '20240616';
 
+document.querySelectorAll('link[rel="icon"], link[rel="manifest"]').forEach(el => {
   const attr = 'href';
   el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + version;
 });
@@ -317,8 +324,26 @@ function openMiniWindow() {
   }
 }
 
+ window.addEventListener('DOMContentLoaded', () => {
+  const btn = document.querySelector('.shrink-trigger');
+  if (btn && window.innerWidth >= 900) {
+    btn.style.display = 'block';
+  }
+});
 
+function createShrinkButton() {
+  const btn = document.querySelector('.shrink-trigger'); // ✅ 改這裡
+  if (btn && window.innerWidth >= 900) {
+    btn.style.display = 'block';
+    btn.onclick = openMiniWindow;
+  }
+}
+window.addEventListener("load", createShrinkButton);
+
+ 
 </script>
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
 </html>
+
+
