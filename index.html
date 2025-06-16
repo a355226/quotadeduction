@@ -304,7 +304,6 @@ window.onload = () => {
   }
 const version = '20240616';
 
-document.querySelectorAll('link[rel="icon"], link[rel="manifest"]').forEach(el => {
   const attr = 'href';
   el[attr] += (el[attr].includes('?') ? '&' : '?') + 'v=' + version;
 });
