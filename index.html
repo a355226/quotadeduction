@@ -329,15 +329,70 @@ function openMiniWindow() {
   }
 });
 
-function createShrinkButton() {
-  if (window.innerWidth >= 900) {
-    const btn = document.createElement("button");
-    btn.textContent = "📟 小視窗模式";
-    btn.className = "shrink-trigger";
-    btn.onclick = openMiniWindow;
-    document.body.appendChild(btn);
-  }
+// 🟡 除錯模式開關（可關閉）
+const DEBUG = true;
+
+function openMiniWindow() {
+  const miniWindow = window.open(
+    window.location.href,
+    'miniQuotaCalc',
+    'width=400,height=600,scrollbars=no,resizable=no'
+  );
+  if (miniWindow) {
+    miniWindow.focus();
+  } else {
+    alert("無法開啟迷你視窗，請檢查是否有瀏覽器阻擋彈出視窗。");
+  }
 }
+
+function createShrinkButton() {
+  const alreadyHasBtn = document.querySelector('.shrink-trigger');
+  if (alreadyHasBtn) {
+    if (DEBUG) console.warn("⚠️ 發現已有 shrink-trigger，跳過建立");
+    return;
+  }
+
+  if (window.innerWidth >= 900) {
+    const btn = document.createElement("button");
+    btn.textContent = "📟 小視窗模式";
+    btn.className = "shrink-trigger";
+    btn.onclick = openMiniWindow;
+
+    document.body.appendChild(btn);
+
+    if (DEBUG) {
+      console.log("✅ 小視窗按鈕已插入 DOM");
+      showDebugMessage("✅ 小視窗按鈕已插入");
+    }
+  } else {
+    if (DEBUG) {
+      console.warn("⛔ 畫面寬度小於 900px，未插入按鈕");
+      showDebugMessage("⛔ 螢幕寬度太窄（" + window.innerWidth + "px）未插入按鈕");
+    }
+  }
+}
+
+function showDebugMessage(msg) {
+  let div = document.getElementById("debug-log");
+  if (!div) {
+    div = document.createElement("div");
+    div.id = "debug-log";
+    div.style.position = "fixed";
+    div.style.bottom = "40px";
+    div.style.right = "15px";
+    div.style.background = "rgba(0,0,0,0.7)";
+    div.style.color = "#fff";
+    div.style.padding = "0.5em 1em";
+    div.style.fontSize = "0.9em";
+    div.style.borderRadius = "6px";
+    div.style.zIndex = "99999";
+    document.body.appendChild(div);
+  }
+  div.textContent = msg;
+  clearTimeout(div._timeout);
+  div._timeout = setTimeout(() => div.remove(), 5000);
+}
+
 window.addEventListener("load", createShrinkButton);
 
 
