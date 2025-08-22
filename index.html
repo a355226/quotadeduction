@@ -274,12 +274,16 @@ if (!dateStr || !cmsLevel) {
   const careReduced = Math.round(base * ratio);
   const transportBase = 1680;
   const transportReduced = Math.round(transportBase * ratio);
+  const transportBaseNewTaipei = 1840;
+const transportReducedNewTaipei = Math.round(transportBaseNewTaipei * ratio);
 
   resultBox.innerHTML = `
-    <b>CMS ${cmsLevel} 級${hasForeign ? "（有外看）" : ""}</b>
+       <b>CMS ${cmsLevel} 級${hasForeign ? "（有外看）" : ""}</b>
     <div class="result-table">
       <div class="row"><span>🧓 扣除照顧專業額度：</span><b>${careReduced.toLocaleString('en-US')} 元</b></div>
-      <div class="row"><span>🚐 扣除交通接送額度：</span><b>${transportReduced.toLocaleString('en-US')} 元</b></div>
+      <div class="row"><span>🚐 扣除交通額度(台)：</span><b>${transportReduced.toLocaleString('en-US')} 元</b></div>
+      <div class="row"><span>🚐 扣除交通額度(新)：</span><b>${transportReducedNewTaipei.toLocaleString('en-US')} 元</b></div>
+    </div>
   `;
 }
 window.onload = () => {
@@ -371,5 +375,3 @@ window.onload = () => {
 <div class="footer-note">Designed by KJ&nbsp;&nbsp;</div>
 </body>
 </html>
-
-
